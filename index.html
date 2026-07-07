@@ -1,0 +1,416 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description"
+        content="Piyush Mehta — Video Editor | Short Form Specialist. Turning long videos into viral content for YouTube, Shorts, Reels, and podcasts." />
+    <meta name="theme-color" content="#000000" />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Piyush Mehta — Video Editor" />
+    <meta property="og:description"
+        content="Professional video editing for YouTube, Shorts, Instagram Reels, and podcasts." />
+    <meta property="og:type" content="website" />
+
+    <title>Piyush Mehta | Video Editor</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet" />
+
+    <link rel="stylesheet" href="./css/styles.css" />
+</head>
+
+<body>
+    <!-- Loading overlay -->
+    <div id="loading" class="loading" aria-hidden="true">
+        <div class="loading__spinner" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-label="Loading">
+        </div>
+        <p class="loading__text">Preparing your experience...</p>
+    </div>
+
+    <!-- Back to top -->
+    <button id="backToTop" class="backToTop" type="button" aria-label="Back to top">
+        <span aria-hidden="true">↑</span>
+    </button>
+
+    <!-- Floating WhatsApp -->
+    <a class="whatsapp" href="https://wa.me/9625651513" target="_blank" rel="noopener noreferrer"
+        aria-label="Chat on WhatsApp">
+        <span class="whatsapp__dot" aria-hidden="true"></span>
+        <span class="whatsapp__icon" aria-hidden="true">💬</span>
+    </a>
+
+    <!-- Sticky Navigation -->
+    <header class="nav">
+        <div class="nav__inner container">
+            <a class="brand" href="#home" aria-label="Go to home">
+                <span class="brand__mark" aria-hidden="true">PM</span>
+                <span class="brand__text">
+                    <span class="brand__name">Piyush Mehta</span>
+                    <span class="brand__role">Video Editor | Short Form Specialist</span>
+                </span>
+            </a>
+
+            <nav class="nav__links" aria-label="Primary">
+                <a class="nav__link" href="#home" data-nav="home">Home</a>
+                <a class="nav__link" href="#portfolio" data-nav="portfolio">Portfolio</a>
+                <a class="nav__link" href="#services" data-nav="services">Services</a>
+                <a class="nav__link" href="#about" data-nav="about">About</a>
+                <a class="nav__link" href="#testimonials" data-nav="testimonials">Testimonials</a>
+                <a class="nav__link" href="#contact" data-nav="contact">Contact</a>
+            </nav>
+
+            <button class="nav__toggle" id="navToggle" type="button" aria-label="Open menu" aria-expanded="false">
+                <span class="nav__toggleIcon" aria-hidden="true"></span>
+            </button>
+        </div>
+
+        <div class="nav__mobile" id="navMobile" aria-label="Mobile menu">
+            <a class="nav__mobileLink" href="#home" data-nav-mobile="home">Home</a>
+            <a class="nav__mobileLink" href="#portfolio" data-nav-mobile="portfolio">Portfolio</a>
+            <a class="nav__mobileLink" href="#services" data-nav-mobile="services">Services</a>
+            <a class="nav__mobileLink" href="#about" data-nav-mobile="about">About</a>
+            <a class="nav__mobileLink" href="#testimonials" data-nav-mobile="testimonials">Testimonials</a>
+            <a class="nav__mobileLink" href="#contact" data-nav-mobile="contact">Contact</a>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero -->
+        <section id="home" class="hero">
+            <div class="container hero__inner">
+                <div class="hero__copy">
+                    <div class="eyebrow">
+                        <span class="eyebrow__pulse" aria-hidden="true"></span>
+                        <span>Premium edits. Viral results.</span>
+                    </div>
+                    <h1 class="hero__title">Turning Long Videos Into Viral Content.</h1>
+                    <p class="hero__desc">
+                        Professional video editor specializing in YouTube, Shorts, Instagram Reels, TikTok and Podcast
+                        edits.
+                    </p>
+
+                    <div class="hero__actions">
+                        <a class="btn btn--primary" href="#portfolio" data-ripple="View Portfolio">View Portfolio</a>
+                        <a class="btn btn--ghost" href="#contact" data-ripple="Contact Me">Contact Me</a>
+                    </div>
+
+                    <div class="hero__badges" aria-label="Highlights">
+                        <span class="badge"><span class="badge__icon" aria-hidden="true">⚡</span> Fast Turnaround</span>
+                        <span class="badge"><span class="badge__icon" aria-hidden="true">🎬</span> Cinematic
+                            Style</span>
+                        <span class="badge"><span class="badge__icon" aria-hidden="true">🧠</span> Retention
+                            Focus</span>
+                    </div>
+                </div>
+
+                <div class="hero__visual" aria-hidden="true">
+                    <div class="glow"></div>
+                    <div class="poster">
+                        <div class="poster__frame">
+                            <div class="poster__bars"></div>
+                            <div class="poster__play">▶</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Portfolio -->
+        <section id="portfolio" class="section">
+            <div class="container">
+                <div class="section__head">
+                    <div>
+                        <p class="section__kicker">Portfolio</p>
+                        <h2 class="section__title">Video Gallery</h2>
+                    </div>
+                    <div class="section__tools" role="search">
+                        <div class="search">
+                            <label class="sr-only" for="searchInput">Search by title</label>
+                            <input id="searchInput" class="search__input" type="search" placeholder="Search videos..."
+                                autocomplete="off" />
+                        </div>
+                        <div class="filters" aria-label="Category filters">
+                            <button class="chip chip--active" type="button" data-filter="All">All</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="portfolioGrid" class="grid grid--portfolio" aria-live="polite"></div>
+
+                <div id="portfolioEmpty" class="empty" hidden>
+                    <p class="empty__title">No videos found.</p>
+                    <p class="empty__desc">Try changing the category or search terms.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Services -->
+        <section id="services" class="section section--alt">
+            <div class="container">
+                <div class="section__head">
+                    <div>
+                        <p class="section__kicker">Services</p>
+                        <h2 class="section__title">Editing that keeps viewers watching</h2>
+                    </div>
+                </div>
+
+                <div class="grid grid--services">
+                    <article class="card card--service">
+                        <div class="card__icon">▶</div>
+                        <h3 class="card__title">YouTube Editing</h3>
+                        <p class="card__desc">Thumbnails-ready pacing, strong hooks, and clean storytelling.</p>
+                    </article>
+                    <article class="card card--service">
+                        <div class="card__icon">⏱</div>
+                        <h3 class="card__title">Shorts Editing</h3>
+                        <p class="card__desc">Retention-focused cuts, captions, and platform-native rhythm.</p>
+                    </article>
+                    <article class="card card--service">
+                        <div class="card__icon">↻</div>
+                        <h3 class="card__title">Reels</h3>
+                        <p class="card__desc">Stylish transitions and cinematic sound design for Reels.</p>
+                    </article>
+                    <article class="card card--service">
+                        <div class="card__icon">🎯</div>
+                        <h3 class="card__title">TikTok</h3>
+                        <p class="card__desc">Fast hooks, trend-aware pacing, and bold typography.</p>
+                    </article>
+                    <article class="card card--service">
+                        <div class="card__icon">🎙</div>
+                        <h3 class="card__title">Podcast Editing</h3>
+                        <p class="card__desc">Noise cleanup, segmenting, and sound balancing.</p>
+                    </article>
+                    <article class="card card--service">
+                        <div class="card__icon">✨</div>
+                        <h3 class="card__title">Motion Graphics</h3>
+                        <p class="card__desc">Kinetic overlays, animated captions, and brand visuals.</p>
+                    </article>
+                    <article class="card card--service">
+                        <div class="card__icon">🖼</div>
+                        <h3 class="card__title">Thumbnail Design</h3>
+                        <p class="card__desc">CTR-driven thumbnails that look premium and readable.</p>
+                    </article>
+                    <article class="card card--service">
+                        <div class="card__icon">🌈</div>
+                        <h3 class="card__title">Color Grading</h3>
+                        <p class="card__desc">Cinematic tones with consistent skin and contrast.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- About -->
+        <section id="about" class="section">
+            <div class="container">
+                <div class="about">
+                    <div class="about__media" aria-hidden="true">
+                        <div class="about__img">
+                            <div class="about__imgOverlay"></div>
+                        </div>
+                    </div>
+                    <div class="about__copy">
+                        <p class="section__kicker">About</p>
+                        <h2 class="section__title">A detail-first editor for modern creators</h2>
+                        <p class="about__desc">
+                            I help creators grow by turning raw footage into structured, cinematic, retention-focused
+                            edits.
+                            My workflow blends pacing, typography, sound design and platform-specific optimization.
+                        </p>
+
+                        <div class="skills" aria-label="Skills">
+                            <p class="skills__title">Toolbox</p>
+                            <div class="skills__list">
+                                <span class="skill">Premiere Pro</span>
+                                <span class="skill">After Effects</span>
+                                <span class="skill">DaVinci Resolve</span>
+                                <span class="skill">Photoshop</span>
+                                <span class="skill">Illustrator</span>
+                                <span class="skill">CapCut</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials -->
+        <section id="testimonials" class="section section--alt">
+            <div class="container">
+                <div class="section__head">
+                    <div>
+                        <p class="section__kicker">Testimonials</p>
+                        <h2 class="section__title">Clients love the result</h2>
+                    </div>
+                </div>
+
+                <div class="grid grid--testimonials">
+                    <article class="card card--testimonial">
+                        <p class="quote">“Incredible retention and pacing. Our Short views jumped fast after switching
+                            editors.”</p>
+                        <div class="testi__meta">
+                            <span class="avatar" aria-hidden="true">A</span>
+                            <div>
+                                <p class="testi__name">Aarav S.</p>
+                                <p class="testi__role">YouTube Creator</p>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="card card--testimonial">
+                        <p class="quote">“Professional communication, clean edits, and cinematic color. Highly
+                            recommended.”</p>
+                        <div class="testi__meta">
+                            <span class="avatar" aria-hidden="true">M</span>
+                            <div>
+                                <p class="testi__name">Meera K.</p>
+                                <p class="testi__role">Instagram Reels</p>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="card card--testimonial">
+                        <p class="quote">“Fast delivery and great thumbnails. The content looks premium and performs
+                            better.”</p>
+                        <div class="testi__meta">
+                            <span class="avatar" aria-hidden="true">R</span>
+                            <div>
+                                <p class="testi__name">Rohan P.</p>
+                                <p class="testi__role">Podcast Producer</p>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stats -->
+        <section class="section">
+            <div class="container">
+                <div class="stats" aria-label="Stats">
+                    <div class="stat">
+                        <div class="stat__value" data-count="120">0</div>
+                        <div class="stat__label">Videos Edited</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat__value" data-count="250000">0</div>
+                        <div class="stat__label">Views Generated</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat__value" data-count="38">0</div>
+                        <div class="stat__label">Happy Clients</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat__value" data-count="4">0</div>
+                        <div class="stat__label">Years Experience</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact -->
+        <section id="contact" class="section section--alt">
+            <div class="container">
+                <div class="contact">
+                    <div class="contact__copy">
+                        <p class="section__kicker">Contact</p>
+                        <h2 class="section__title">Let’s make your next video go viral</h2>
+                        <p class="contact__desc">Share your channel + goals. I’ll reply with an editing plan and
+                            timeline.</p>
+
+                        <div class="contact__methods">
+                            <div class="method">
+                                <div class="method__label">Email</div>
+                                <div class="method__row">
+                                    <span id="emailText" class="method__value">piyushmehta@example.com</span>
+                                    <button id="copyEmail" class="iconBtn" type="button" aria-label="Copy email">
+                                        <span aria-hidden="true">⧉</span>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="method">
+                                <div class="method__label">WhatsApp</div>
+href="https://wa.me/9625651513" target="_blank"
+                                    rel="noopener noreferrer">Chat on WhatsApp</a>
+                            </div>
+
+                            <div class="method">
+                                <div class="method__label">Instagram</div>
+                                <a class="method__value method__link" href="#" target="_blank"
+                                    rel="noopener noreferrer">@piyush</a>
+                            </div>
+
+                            <div class="method">
+                                <div class="method__label">LinkedIn</div>
+                                <a class="method__value method__link" href="#" target="_blank"
+                                    rel="noopener noreferrer">/in/piyush</a>
+                            </div>
+
+                            <div class="method">
+                                <div class="method__label">YouTube</div>
+                                <a class="method__value method__link" href="#" target="_blank"
+                                    rel="noopener noreferrer">/c/piyush</a>
+                            </div>
+                        </div>
+
+                        <div class="contact__actions">
+                            <a class="btn btn--primary" href="mailto:piyushmehta@example.com"
+                                data-ripple="Email me">Email me</a>
+                            <a class="btn btn--ghost" href="#" id="downloadResume"
+                                data-ripple="Download Resume">Download Resume</a>
+                        </div>
+                    </div>
+
+                    <div class="contact__panel" aria-hidden="true">
+                        <div class="panel">
+                            <div class="panel__glow"></div>
+                            <div class="panel__title">Quick Brief</div>
+                            <ul class="panel__list">
+                                <li><span class="accent">•</span> Video length + platform</li>
+                                <li><span class="accent">•</span> Style reference links</li>
+                                <li><span class="accent">•</span> Delivery timeline</li>
+                            </ul>
+                            <div class="panel__hint">Typical response within 24 hours.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container footer__inner">
+            <p class="footer__copy">© <span id="year"></span> Piyush Mehta. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Lightbox Modal -->
+    <div id="videoModal" class="modal" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Video player">
+        <div class="modal__backdrop" data-close="true"></div>
+        <div class="modal__content" role="document">
+            <div class="modal__top">
+                <div class="modal__meta">
+                    <div id="modalTitle" class="modal__title">Video</div>
+                    <div id="modalSub" class="modal__sub">Category • Platform • Duration</div>
+                </div>
+                <button class="modal__close" type="button" data-close="true" aria-label="Close modal">✕</button>
+            </div>
+
+            <div class="modal__player">
+                <div class="player" id="modalPlayer"></div>
+            </div>
+
+            <div class="modal__bottom">
+                <p class="modal__note">Tip: Use space to pause/play. Esc to close.</p>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="./js/app.js"></script>
+</body>
+
+</html>

@@ -38,8 +38,9 @@
     </button>
 
     <!-- Floating WhatsApp -->
-    <a class="whatsapp" href="https://wa.me/9625651513" target="_blank" rel="noopener noreferrer"
+    <a class="whatsapp" href="https://wa.me/919625651513" target="_blank" rel="noopener noreferrer"
         aria-label="Chat on WhatsApp">
+
         <span class="whatsapp__dot" aria-hidden="true"></span>
         <span class="whatsapp__icon" aria-hidden="true">💬</span>
     </a>
@@ -48,7 +49,10 @@
     <header class="nav">
         <div class="nav__inner container">
             <a class="brand" href="#home" aria-label="Go to home">
-                <span class="brand__mark" aria-hidden="true">PM</span>
+                <span class="brand__mark" aria-hidden="true">
+                    <img class="brand__logo" src="./media/WhatsApp Image 2026-07-08 at 02.06.23.jpeg"
+                        alt="Piyush Mehta logo">
+                </span>
                 <span class="brand__text">
                     <span class="brand__name">Piyush Mehta</span>
                     <span class="brand__role">Video Editor | Short Form Specialist</span>
@@ -209,8 +213,10 @@
             <div class="container">
                 <div class="about">
                     <div class="about__media" aria-hidden="true">
-                        <div class="about__img">
-                            <div class="about__imgOverlay"></div>
+                        <div class="about__img" role="img" aria-label="About image">
+                            <img class="about__imgMedia" src="./media/WhatsApp Image 2026-07-08 at 02.06.23.jpeg"
+                                alt="Piyush Mehta" loading="lazy">
+                            <div class="about__imgOverlay" aria-hidden="true"></div>
                         </div>
                     </div>
                     <div class="about__copy">
@@ -250,7 +256,12 @@
 
                 <div class="grid grid--testimonials">
                     <article class="card card--testimonial">
-                        <p class="quote">“Incredible retention and pacing. Our Short views jumped fast after switching
+                        <div class="testi__media">
+                            <video class="testi__video" controls preload="metadata" playsinline>
+                                <source src="./media/WhatsApp Video 2026-07-07 at 18.21.17.mp4" type="video/mp4" />
+                            </video>
+                        </div>
+                        <p class="quote">“Amazing retention and pacing—our Short views jumped fast after switching
                             editors.”</p>
                         <div class="testi__meta">
                             <span class="avatar" aria-hidden="true">A</span>
@@ -261,6 +272,11 @@
                         </div>
                     </article>
                     <article class="card card--testimonial">
+                        <div class="testi__media">
+                            <video class="testi__video" controls preload="metadata" playsinline>
+                                <source src="./media/WhatsApp Video 2026-07-07 at 18.23.43.mp4" type="video/mp4" />
+                            </video>
+                        </div>
                         <p class="quote">“Professional communication, clean edits, and cinematic color. Highly
                             recommended.”</p>
                         <div class="testi__meta">
@@ -272,7 +288,12 @@
                         </div>
                     </article>
                     <article class="card card--testimonial">
-                        <p class="quote">“Fast delivery and great thumbnails. The content looks premium and performs
+                        <div class="testi__media">
+                            <video class="testi__video" controls preload="metadata" playsinline>
+                                <source src="./media/WhatsApp Video 2026-07-07 at 18.25.15.mp4" type="video/mp4" />
+                            </video>
+                        </div>
+                        <p class="quote">“Fast delivery and great thumbnails—the content looks premium and performs
                             better.”</p>
                         <div class="testi__meta">
                             <span class="avatar" aria-hidden="true">R</span>
@@ -310,70 +331,160 @@
             </div>
         </section>
 
-        <!-- Contact -->
+        <!-- Premium Client Inquiry -->
         <section id="contact" class="section section--alt">
             <div class="container">
-                <div class="contact">
-                    <div class="contact__copy">
-                        <p class="section__kicker">Contact</p>
-                        <h2 class="section__title">Let’s make your next video go viral</h2>
-                        <p class="contact__desc">Share your channel + goals. I’ll reply with an editing plan and
-                            timeline.</p>
+                <div class="contactPremium" aria-label="Client inquiry section">
+                    <!-- LEFT: Form -->
+                    <div class="contactPremium__left">
+                        <p class="section__kicker">Client Inquiry</p>
+                        <h2 class="section__title">Let's Create Your Next Viral Video</h2>
+                        <p class="contactPremium__subtitle">
+                            Tell me about your project and I'll reply within 24 hours with pricing, timeline, and
+                            editing suggestions.
+                        </p>
 
-                        <div class="contact__methods">
-                            <div class="method">
-                                <div class="method__label">Email</div>
-                                <div class="method__row">
-                                    <span id="emailText" class="method__value">piyushmehta@example.com</span>
-                                    <button id="copyEmail" class="iconBtn" type="button" aria-label="Copy email">
-                                        <span aria-hidden="true">⧉</span>
-                                    </button>
+                        <form id="clientInquiryForm" class="inquiryForm" novalidate>
+                            <input type="hidden" name="access_key" value="ab45dadc-7042-4f47-895d-981ecc6e6072">
+
+                            <input type="hidden" name="subject" value="New Client Inquiry - Portfolio">
+
+                            <input type="hidden" name="from_name" value="Piyush Mehta Portfolio">
+
+                            <input type="checkbox" name="botcheck" style="display:none">
+                            <div class="formGrid">
+                                <div class="field">
+                                    <label class="label" for="fullName">Full Name <span class="req"
+                                            aria-hidden="true">*</span></label>
+                                    <input class="input" id="fullName" name="fullName" type="text" autocomplete="name"
+                                        required />
+                                    <div class="field__error" data-error-for="fullName" aria-live="polite"></div>
+                                </div>
+
+                                <div class="field">
+                                    <label class="label" for="email">Email Address <span class="req"
+                                            aria-hidden="true">*</span></label>
+                                    <input class="input" id="email" name="email" type="email" autocomplete="email"
+                                        required />
+                                    <div class="field__error" data-error-for="email" aria-live="polite"></div>
+                                </div>
+
+                                <div class="field">
+                                    <label class="label" for="whatsappNumber">WhatsApp Number</label>
+                                    <input class="input" id="whatsappNumber" name="whatsappNumber" type="tel"
+                                        autocomplete="tel" placeholder="Country code + number" />
+                                </div>
+
+                                <div class="field">
+                                    <label class="label" for="channel">YouTube Channel / Website</label>
+                                    <input class="input" id="channel" name="channel" type="url" autocomplete="url"
+                                        placeholder="https://..." />
+                                </div>
+
+                                <div class="field">
+                                    <label class="label" for="videoType">Video Type</label>
+                                    <select class="input" id="videoType" name="videoType" required>
+                                        <option value="" selected disabled>Select a type</option>
+                                        <option>Long Form</option>
+                                        <option>Shorts</option>
+                                        <option>Podcast</option>
+                                        <option>Documentary</option>
+                                        <option>Commercial</option>
+                                    </select>
+                                    <div class="field__error" data-error-for="videoType" aria-live="polite"></div>
+                                </div>
+
+                                <div class="field">
+                                    <label class="label" for="budget">Estimated Budget</label>
+                                    <input class="input" id="budget" name="budget" type="text"
+                                        placeholder="e.g., $200-$500" />
+                                </div>
+
+                                <div class="field field--full">
+                                    <label class="label" for="details">Project Details <span class="req"
+                                            aria-hidden="true">*</span></label>
+                                    <textarea class="input input--textarea" id="details" name="details" rows="5"
+                                        required></textarea>
+                                    <div class="field__error" data-error-for="details" aria-live="polite"></div>
+                                </div>
+
+                                <div class="field field--full">
+                                    <label class="label" for="fileUpload">File Upload (optional)</label>
+                                    <input class="input" id="fileUpload" name="fileUpload" type="file"
+                                        accept="video/*,audio/*,.pdf,.zip" />
                                 </div>
                             </div>
 
-                            <div class="method">
-                                <div class="method__label">WhatsApp</div>
-href="https://wa.me/9625651513" target="_blank"
-                                    rel="noopener noreferrer">Chat on WhatsApp</a>
+                            <div class="formFooter">
+                                <button class="btn btn--primary btn--submit" type="submit" id="submitBtn"
+                                    data-ripple="Send Project">
+                                    <span class="btn__text">Send Project</span>
+                                    <span class="btn__spinner" aria-hidden="true"></span>
+                                </button>
+
+                                <div class="formFeedback" aria-live="polite">
+                                    <div class="msg msg--success" id="formSuccess" hidden>Thank you! I'll contact you
+                                        within 24 hours.</div>
+                                    <div class="msg msg--error" id="formError" hidden>Something went wrong. Please try
+                                        again.</div>
+                                    <div class="msg msg--loading" id="formLoading" hidden>Sending...</div>
+                                </div>
                             </div>
 
-                            <div class="method">
-                                <div class="method__label">Instagram</div>
-                                <a class="method__value method__link" href="#" target="_blank"
-                                    rel="noopener noreferrer">@piyush</a>
-                            </div>
-
-                            <div class="method">
-                                <div class="method__label">LinkedIn</div>
-                                <a class="method__value method__link" href="#" target="_blank"
-                                    rel="noopener noreferrer">/in/piyush</a>
-                            </div>
-
-                            <div class="method">
-                                <div class="method__label">YouTube</div>
-                                <a class="method__value method__link" href="#" target="_blank"
-                                    rel="noopener noreferrer">/c/piyush</a>
-                            </div>
-                        </div>
-
-                        <div class="contact__actions">
-                            <a class="btn btn--primary" href="mailto:piyushmehta@example.com"
-                                data-ripple="Email me">Email me</a>
-                            <a class="btn btn--ghost" href="#" id="downloadResume"
-                                data-ripple="Download Resume">Download Resume</a>
-                        </div>
+                            <p class="formHint">
+                                By submitting, you agree to be contacted about your project.
+                            </p>
+                        </form>
                     </div>
 
-                    <div class="contact__panel" aria-hidden="true">
-                        <div class="panel">
-                            <div class="panel__glow"></div>
-                            <div class="panel__title">Quick Brief</div>
-                            <ul class="panel__list">
-                                <li><span class="accent">•</span> Video length + platform</li>
-                                <li><span class="accent">•</span> Style reference links</li>
-                                <li><span class="accent">•</span> Delivery timeline</li>
+                    <!-- RIGHT: Premium card -->
+                    <div class="contactPremium__right" aria-hidden="false">
+                        <div class="glassCard">
+                            <div class="glassCard__top">
+                                <div class="glassCard__title">Premium Delivery & Clear Communication</div>
+                                <div class="glassCard__sub">No guesswork—just a plan you can trust.</div>
+                            </div>
+
+                            <ul class="glassCard__bullets">
+                                <li><span class="check" aria-hidden="true">✓</span> Average response: <strong>
+                                        < 24 hours</strong>
+                                </li>
+                                <li><span class="check" aria-hidden="true">✓</span> Delivery: <strong>24–72
+                                        Hours</strong></li>
+                                <li><span class="check" aria-hidden="true">✓</span> Worldwide Remote Services</li>
+                                <li><span class="check" aria-hidden="true">✓</span> Free First Consultation</li>
                             </ul>
-                            <div class="panel__hint">Typical response within 24 hours.</div>
+
+                            <div class="glassCard__actions" aria-label="Quick contact buttons">
+                                <a class="socBtn" href="https://wa.me/919625651513" target="_blank"
+                                    rel="noopener noreferrer" aria-label="WhatsApp">
+                                    <span class="socBtn__icon" aria-hidden="true">💬</span>
+                                    <span class="socBtn__text">WhatsApp</span>
+                                </a>
+
+                                <a class="socBtn" href="https://www.instagram.com/piyush" target="_blank"
+                                    rel="noopener noreferrer" aria-label="Instagram">
+                                    <span class="socBtn__icon" aria-hidden="true">📸</span>
+                                    <span class="socBtn__text">Instagram</span>
+                                </a>
+
+                                <a class="socBtn" href="https://www.linkedin.com/in/piyush" target="_blank"
+                                    rel="noopener noreferrer" aria-label="LinkedIn">
+                                    <span class="socBtn__icon" aria-hidden="true">in</span>
+                                    <span class="socBtn__text">LinkedIn</span>
+                                </a>
+
+                                <a class="socBtn" href="https://www.youtube.com/@piyushmehtaji" target="_blank"
+                                    rel="noopener noreferrer" aria-label="YouTube">
+                                    <span class="socBtn__icon" aria-hidden="true">▶</span>
+                                    <span class="socBtn__text">YouTube</span>
+                                </a>
+
+                                <a class="socBtn" href="mailto:piyushmehta1513@gmail.com" aria-label="Email">
+                                    <span class="socBtn__icon" aria-hidden="true">✉</span>
+                                    <span class="socBtn__text">Email</span>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -411,6 +522,8 @@ href="https://wa.me/9625651513" target="_blank"
     </div>
 
     <script type="module" src="./js/app.js"></script>
+    <script type="module" src="./js/contactForm.js"></script>
 </body>
+
 
 </html>

@@ -41,6 +41,23 @@ function renderPortfolio() {
   const items = getFilteredVideos();
   gridEl.innerHTML = '';
 
+  // Toggle 9:16 for Shorts category
+  gridEl.classList.toggle('is-shorts', activeCategory === 'Shorts');
+
+  // Thumbnail fallback: if maxres fails (404), swap to hqdefault.
+  for (const img of gridEl.querySelectorAll('img[data-thumb-fallback]')) {
+    const fallback = img.getAttribute('data-thumb-fallback') || '';
+    if (!fallback) continue;
+    img.addEventListener('error', () => {
+      // Avoid loops
+      if (img.dataset.thumbTried === '1') return;
+      img.dataset.thumbTried = '1';
+      img.src = fallback;
+    }, { once: true });
+  }
+
+
+
   if (!items.length) {
     emptyEl.hidden = false;
     return;
@@ -300,4 +317,6 @@ async function boot() {
 }
 
 boot();
+
+
 

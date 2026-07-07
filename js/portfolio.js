@@ -39,11 +39,23 @@ export function getYouTubeEmbedUrl(youtubeURL) {
   return `https://www.youtube.com/embed/${id}?autoplay=1&rel=0&playsinline=1`;
 }
 
-export function getYouTubeThumbnail(youtubeURLOrId) {
-  const id = normalizeYoutubeId(youtubeURLOrId);
-  if (!id) return '';
-  return `https://img.youtube.com/vi/${id}/hqdefault.jpg`;
+function normalizeThumbId(youtubeURLOrId) {
+  return normalizeYoutubeId(youtubeURLOrId);
 }
+
+export function getYouTubeThumbnail(youtubeURLOrId) {
+  const id = normalizeThumbId(youtubeURLOrId);
+  if (!id) return '';
+  return `https://i.ytimg.com/vi/${id}/maxresdefault.jpg`;
+}
+
+export function getYouTubeThumbnailFallback(youtubeURLOrId) {
+  const id = normalizeThumbId(youtubeURLOrId);
+  if (!id) return '';
+  return `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
+}
+
+
 
 export function renderCategoryChips(filtersEl, onSelect) {
   const frag = document.createDocumentFragment();
@@ -116,7 +128,14 @@ export function buildPortfolioCard(item) {
 
   el.innerHTML = `
     <div class="pcard__thumbWrap">
-      <img class="pcard__thumb" loading="lazy" decoding="async" src="${escapeHtml(thumb)}" alt="${escapeHtml(item.title || 'Video thumbnail')}">
+      <img
+        class="pcard__thumb"
+        loading="lazy"
+        decoding="async"
+        src="${escapeHtml(thumb)}"
+        data-thumb-fallback="${escapeHtml(getYouTubeThumbnailFallback(item.youtubeURL || ''))}"
+        alt="${escapeHtml(item.title || 'Video thumbnail')}">
+
       <div class="pcard__shade" aria-hidden="true"></div>
       <div class="pcard__play" aria-hidden="true">▶</div>
     </div>

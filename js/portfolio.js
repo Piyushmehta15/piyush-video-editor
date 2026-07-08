@@ -236,7 +236,8 @@ function getPlatformAndTypeFromUrl(url) {
 
 export function buildPortfolioCard(item) {
 
-  const rawUrl = item.youtubeURL || item.videoURL || item.url || '';
+  const rawUrl = item.url || item.videoURL || item.URL || item.youtubeURL || '';
+
   const { platform, contentType } = getPlatformAndTypeFromUrl(rawUrl);
 
   const thumbCustom = (item.thumbnail || '').trim();
@@ -262,7 +263,10 @@ export function buildPortfolioCard(item) {
 
 
   el.dataset.description = item.description || '';
-  el.dataset.youtube = item.youtubeURL || '';
+  el.dataset.url = item.url || item.URL || '';
+  el.dataset.youtube = item.url || item.URL || '';
+  el.dataset.ig = item.url || item.URL || item.igURL || '';
+
 
   el.innerHTML = `
     <div class="pcard__thumbWrap">
@@ -271,7 +275,7 @@ export function buildPortfolioCard(item) {
         loading="lazy"
         decoding="async"
         src="${escapeHtml(thumb)}"
-        data-thumb-fallback="${escapeHtml(getYouTubeThumbnailFallback(item.youtubeURL || ''))}"
+        data-thumb-fallback="${escapeHtml(getYouTubeThumbnailFallback(item.url || item.youtubeURL || ''))}"
         alt="${escapeHtml(item.title || 'Video thumbnail')}" >
 
       <div class="pcard__shade" aria-hidden="true"></div>

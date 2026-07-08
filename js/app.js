@@ -1,5 +1,6 @@
 import { CATEGORIES, renderCategoryChips, getYouTubeEmbedUrl, buildPortfolioCard, attachModalOpenHandlers } from './portfolio.js';
 
+
 const $ = (sel) => document.querySelector(sel);
 
 const loadingEl = $('#loading');
@@ -83,7 +84,13 @@ function openModalFromDataset(ds) {
   const category = ds.category || '';
   const platform = ds.platform || '';
 
-  const youtubeURL = ds.youtube || '';
+  const url = ds.url || ds.youtube || ds.ig || '';
+
+  // For backwards compatibility with older dataset keys.
+  const youtubeURL = ds.youtube || (url || '');
+  const instagramURL = ds.ig || url || '';
+
+
 
 
   modalTitle.textContent = title;
@@ -91,14 +98,34 @@ function openModalFromDataset(ds) {
 
 
   const embedUrl = getYouTubeEmbedUrl(youtubeURL);
-  modalPlayer.innerHTML = embedUrl
-    ? `<iframe
+
+  // Instagram: embed as iframe when URL is provided.
+  // Note: Instagram embed sometimes blocks embedding in some contexts.
+  const instagramEmbedUrl = instagramURL
+    ? instagramURL
+        // remove query params
+        .split('?')[0]
+    : '';
+
+
+  const actualYoutubeUrl = youtubeURL || url || '';
+  if (embedUrl || actualYoutubeUrl) {
+    modalPlayer.innerHTML = `<iframe
         title="${title}"
         src="${embedUrl}"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
         allowfullscreen
-      ></iframe>`
-    : `<p style="color:rgba(255,255,255,.72);padding:14px">Video not available.</p>`;
+      ></iframe>`;
+  } else if (instagramEmbedUrl) {
+    modalPlayer.innerHTML = `<iframe
+        title="${title}"
+        src="${instagramEmbedUrl}"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen
+      ></iframe>`;
+  } else {
+    modalPlayer.innerHTML = `<p style="color:rgba(255,255,255,.72);padding:14px">Video not available.</p>`;
+  }
 
   modal.classList.add('is-open');
   modal.setAttribute('aria-hidden', 'false');
@@ -167,7 +194,7 @@ function closeModal() {
 }
 
 async function loadPortfolioJson() {
-  const res = await fetch('./data/portfolio.json', { cache: 'no-store' });
+  const res = await fetch('./data/portfolio_v2.json', { cache: 'no-store' });
   if (!res.ok) throw new Error(`Failed to load portfolio.json: ${res.status}`);
   return res.json();
 }

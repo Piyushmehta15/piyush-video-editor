@@ -187,13 +187,38 @@
 
                 <div class="hero__visual" aria-hidden="true">
                     <div class="glow"></div>
-                    <div class="poster">
-                        <div class="poster__frame">
-                            <div class="poster__bars"></div>
-                            <div class="poster__play">▶</div>
+                    <div
+                        class="heroFeatured"
+                        id="heroFeatured"
+                        role="button"
+                        tabIndex="0"
+                        aria-label="Play featured video"
+                    >
+                        <video
+                            id="heroFeaturedVideo"
+                            class="heroFeatured__video"
+                            muted
+                            loop
+                            playsinline
+                            autoplay
+                            preload="metadata"
+                            loading="lazy"
+                            poster="./media/WhatsApp Video 2026-07-07 at 18.21.17.mp4"
+                        >
+                            <source src="./media/WhatsApp Video 2026-07-07 at 18.21.17.mp4" type="video/mp4" />
+                        </video>
+
+                        <div class="heroFeatured__overlay" aria-hidden="true"></div>
+                        <button class="heroFeatured__play" type="button" aria-hidden="true">▶</button>
+
+                        <div class="heroFeatured__glassBorder" aria-hidden="true"></div>
+
+                        <div class="heroFeatured__fallback" aria-hidden="true">
+                            <div class="heroFeatured__fallbackInner"></div>
                         </div>
                     </div>
                 </div>
+
             </div>
         </section>
 

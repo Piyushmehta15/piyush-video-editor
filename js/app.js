@@ -108,6 +108,57 @@ function openModalFromDataset(ds) {
   closeBtn?.focus();
 }
 
+function setupHeroFeaturedVideo() {
+  const card = document.getElementById('heroFeatured');
+  const video = document.getElementById('heroFeaturedVideo');
+  if (!card || !video) return;
+
+  // Ensure it tries to play on load (muted autoplay should work)
+  video.muted = true;
+  video.loop = true;
+
+  const setFailed = () => {
+    card.classList.add('is-failed');
+  };
+
+  video.addEventListener('error', setFailed, { once: true });
+
+  // Best-effort autoplay
+  const p = video.play();
+  if (p && typeof p.catch === 'function') {
+    p.catch(() => {
+      // Autoplay may be blocked; don't crash.
+    });
+  }
+
+  // Click: open modal using the featured mp4
+  card.addEventListener('click', () => {
+    // Populate modal with Local MP4
+    modalTitle.textContent = 'Featured Video';
+    modalSub.textContent = ['Video', 'Local'].join(' • ');
+    // Use <video> tag inside modal for local playback.
+    modalPlayer.innerHTML = `
+      <video
+        controls
+        preload="metadata"
+        playsinline
+        style="width:100%;height:100%;display:block;object-fit:contain;"
+      >
+        <source src="./media/WhatsApp Video 2026-07-07 at 18.21.17.mp4" type="video/mp4" />
+      </video>
+    `;
+    modal.classList.add('is-open');
+    modal.setAttribute('aria-hidden', 'false');
+
+    const closeBtn = modal.querySelector('[data-close="true"]');
+    closeBtn?.focus();
+  });
+}
+
+
+
+
+
 function closeModal() {
   modal.classList.remove('is-open');
   modal.setAttribute('aria-hidden', 'true');

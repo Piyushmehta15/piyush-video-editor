@@ -192,18 +192,28 @@ function getPlatformAndTypeFromUrl(url) {
   })();
 
   const contentType = (() => {
+    // Priority: explicit platform-specific paths first
+
     // YouTube
     if (s.includes('youtube.com') || s.includes('youtu.be')) {
       if (s.includes('/shorts/')) return 'Shorts';
+      if (s.includes('/embed/')) return 'Long Form';
       return 'Long Form';
     }
 
     // Instagram
     if (s.includes('instagram.com')) {
+      // Reels: /reel/<id> or /reels/<id>
       if (s.includes('/reel/')) return 'Reels';
-      // Some instagram post URLs have /p/ or no hint; default to Post.
+      if (s.includes('/reels/')) return 'Reels';
+      // Posts: /p/<id>
       if (s.includes('/p/')) return 'Post';
       return 'Post';
+    }
+
+    // TikTok
+    if (s.includes('tiktok.com')) {
+      return 'TikTok';
     }
 
     // Vimeo
@@ -212,12 +222,14 @@ function getPlatformAndTypeFromUrl(url) {
     }
 
     // Local
-    if (s.includes('.mp4') || s.includes('.webm') || s.includes('.ogg')) {
+    if (s.includes('.mp4') || s.includes('.webm') || s.includes('.ogg') || s.includes('.mkv')) {
       return 'Video';
     }
 
+    console.warn('[portfolio] Could not determine content type from URL:', url);
     return 'Video';
   })();
+
 
   return { platform, contentType };
 }

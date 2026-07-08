@@ -9,27 +9,98 @@ export const CATEGORIES = [
   'Motion Graphics'
 ];
 
-function normalizeYoutubeId(input) {
+export function getYoutubeVideoId(input) {
   if (!input) return '';
   const s = String(input).trim();
 
-  // If already an ID (no separators)
+  // If already an ID (exactly 11 chars)
   if (/^[a-zA-Z0-9_-]{11}$/.test(s)) return s;
 
-  // youtube.com/watch?v=
-  const watchMatch = s.match(/[?&]v=([^&]+)/);
-  if (watchMatch?.[1]) return watchMatch[1];
+  // Parse URL when possible (covers shorts/, watch/, embed/)
+  try {
+    const url = new URL(s.startsWith('http') ? s : `https://${s}`);
+    const host = url.hostname.replace(/^www\./, '');
 
-  // youtu.be/<id>
-  const shortMatch = s.match(/youtu\.be\/([^?&/]+)/);
-  if (shortMatch?.[1]) return shortMatch[1];
+    // youtu.be/<id>
+    if (host === 'youtu.be') {
+      const p = url.pathname.split('/').filter(Boolean)[0];
+      const id = p?.match(/^[a-zA-Z0-9_-]{11}/)?.[0];
+      if (id) return id;
+    }
 
-  // /embed/<id>
-  const embedMatch = s.match(/\/embed\/([^?&/]+)/);
-  if (embedMatch?.[1]) return embedMatch[1];
+    // youtube.com/watch?v=<id>
+    if (host === 'youtube.com' || host === 'm.youtube.com' || host === 'music.youtube.com') {
+      const v = url.searchParams.get('v');
+      const idFromV = v?.match(/^[a-zA-Z0-9_-]{11}/)?.[0];
+      if (idFromV) return idFromV;
 
+      // youtube.com/shorts/<id>
+      const shortsPath = url.pathname.match(/\/shorts\/([^/?#]+)/);
+      if (shortsPath?.[1]) {
+        const id = shortsPath[1].match(/^[a-zA-Z0-9_-]{11}/)?.[0];
+        if (id) return id;
+      }
+
+      // youtube.com/embed/<id>
+      const embedPath = url.pathname.match(/\/embed\/([^/?#]+)/);
+      if (embedPath?.[1]) {
+        const id = embedPath[1].match(/^[a-zA-Z0-9_-]{11}/)?.[0];
+        if (id) return id;
+      }
+
+      // Sometimes people pass /<id> as the path
+      const segments = url.pathname.split('/').filter(Boolean);
+      const last = segments[segments.length - 1];
+      const id = last?.match(/^[a-zA-Z0-9_-]{11}/)?.[0];
+      if (id) return id;
+    }
+  } catch {
+    // ignore, regex fallbacks below
+  }
+
+  // Regex fallbacks (handle malformed watch params like: watch?v=<id>?feature=share)
+  // watch?v=
+  const watchMatch = s.match(/[?&]v=([^&#]+)/);
+  if (watchMatch?.[1]) {
+    const id = watchMatch[1].match(/^[a-zA-Z0-9_-]{11}/)?.[0];
+    if (id) return id;
+  }
+
+  // youtu.be/
+  const shortMatch = s.match(/youtu\.be\/([^?&#/]+)/);
+  if (shortMatch?.[1]) {
+    const id = shortMatch[1].match(/^[a-zA-Z0-9_-]{11}/)?.[0];
+    if (id) return id;
+  }
+
+  // /shorts/
+  const shortsMatch = s.match(/\/shorts\/([^?&#/]+)/);
+  if (shortsMatch?.[1]) {
+    const id = shortsMatch[1].match(/^[a-zA-Z0-9_-]{11}/)?.[0];
+    if (id) return id;
+  }
+
+  // /embed/
+  const embedMatch = s.match(/\/embed\/([^?&#/]+)/);
+  if (embedMatch?.[1]) {
+    const id = embedMatch[1].match(/^[a-zA-Z0-9_-]{11}/)?.[0];
+    if (id) return id;
+  }
+
+  // Final: extract first valid 11-char token
+  const anyIdMatch = s.match(/([a-zA-Z0-9_-]{11})/);
+  if (anyIdMatch?.[1]) return anyIdMatch[1];
+
+  console.warn('[portfolio] Invalid YouTube URL/ID, cannot extract video id:', input);
   return '';
 }
+
+function normalizeYoutubeId(input) {
+  return getYoutubeVideoId(input);
+}
+
+
+
 
 export function getYouTubeEmbedUrl(youtubeURL) {
   const id = normalizeYoutubeId(youtubeURL);
@@ -46,14 +117,18 @@ function normalizeThumbId(youtubeURLOrId) {
 export function getYouTubeThumbnail(youtubeURLOrId) {
   const id = normalizeThumbId(youtubeURLOrId);
   if (!id) return '';
-  return `https://i.ytimg.com/vi/${id}/maxresdefault.jpg`;
+  // Use img.youtube.com per requirement
+  return `https://img.youtube.com/vi/${id}/maxresdefault.jpg`;
 }
 
 export function getYouTubeThumbnailFallback(youtubeURLOrId) {
   const id = normalizeThumbId(youtubeURLOrId);
   if (!id) return '';
-  return `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
+  // Fallback thumbnail
+  return `https://img.youtube.com/vi/${id}/hqdefault.jpg`;
 }
+
+
 
 
 
@@ -106,11 +181,61 @@ function escapeHtml(str) {
 
 
 
+function getPlatformAndTypeFromUrl(url) {
+  const s = String(url || '').toLowerCase();
+
+  const platform = (() => {
+    if (s.includes('youtube.com') || s.includes('youtu.be')) return 'YouTube';
+    if (s.includes('instagram.com')) return 'Instagram';
+    if (s.includes('vimeo.com')) return 'Vimeo';
+    return 'Local';
+  })();
+
+  const contentType = (() => {
+    // YouTube
+    if (s.includes('youtube.com') || s.includes('youtu.be')) {
+      if (s.includes('/shorts/')) return 'Shorts';
+      return 'Long Form';
+    }
+
+    // Instagram
+    if (s.includes('instagram.com')) {
+      if (s.includes('/reel/')) return 'Reels';
+      // Some instagram post URLs have /p/ or no hint; default to Post.
+      if (s.includes('/p/')) return 'Post';
+      return 'Post';
+    }
+
+    // Vimeo
+    if (s.includes('vimeo.com')) {
+      return 'Long Form';
+    }
+
+    // Local
+    if (s.includes('.mp4') || s.includes('.webm') || s.includes('.ogg')) {
+      return 'Video';
+    }
+
+    return 'Video';
+  })();
+
+  return { platform, contentType };
+}
+
 export function buildPortfolioCard(item) {
+
+  const rawUrl = item.youtubeURL || item.videoURL || item.url || '';
+  const { platform, contentType } = getPlatformAndTypeFromUrl(rawUrl);
+
   const thumbCustom = (item.thumbnail || '').trim();
-  const thumb = thumbCustom ? thumbCustom : getYouTubeThumbnail(item.youtubeURL);
-  const category = item.category || '';
-  const platform = item.platform || inferPlatformFromCategory(category);
+  const thumb = thumbCustom
+    ? thumbCustom
+    : (platform === 'YouTube'
+        ? getYouTubeThumbnail(rawUrl)
+        : '');
+
+  const category = contentType;
+
 
   const el = document.createElement('article');
   el.className = 'card pcard';
@@ -122,7 +247,8 @@ export function buildPortfolioCard(item) {
   el.dataset.title = item.title || '';
   el.dataset.category = category;
   el.dataset.platform = platform;
-  el.dataset.duration = item.duration || '';
+
+
   el.dataset.description = item.description || '';
   el.dataset.youtube = item.youtubeURL || '';
 
@@ -134,17 +260,17 @@ export function buildPortfolioCard(item) {
         decoding="async"
         src="${escapeHtml(thumb)}"
         data-thumb-fallback="${escapeHtml(getYouTubeThumbnailFallback(item.youtubeURL || ''))}"
-        alt="${escapeHtml(item.title || 'Video thumbnail')}">
+        alt="${escapeHtml(item.title || 'Video thumbnail')}" >
 
       <div class="pcard__shade" aria-hidden="true"></div>
       <div class="pcard__play" aria-hidden="true">▶</div>
     </div>
+
     <div class="pcard__content">
       <h3 class="pcard__title">${escapeHtml(item.title || '')}</h3>
       <div class="pcard__meta">
         <span class="pcard__pill">${escapeHtml(category)}</span>
         <span class="pcard__pill pcard__pill--accent">${escapeHtml(platform)}</span>
-        <span class="pcard__pill">${escapeHtml(item.duration || '')}</span>
       </div>
     </div>
   `;
@@ -153,14 +279,7 @@ export function buildPortfolioCard(item) {
   return el;
 }
 
-export function inferPlatformFromCategory(category) {
-  // This app asks for platform; allow JSON to override via item.platform.
-  // If missing, use category heuristic (optional).
-  const c = String(category).toLowerCase();
-  if (c.includes('short')) return 'Shorts';
-  if (c.includes('podcast')) return 'Podcast';
-  return 'YouTube';
-}
+
 
 export function attachModalOpenHandlers(gridEl, onOpen) {
   gridEl.addEventListener('click', (e) => {

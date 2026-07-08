@@ -44,17 +44,24 @@ function renderPortfolio() {
   // Toggle 9:16 for Shorts category
   gridEl.classList.toggle('is-shorts', activeCategory === 'Shorts');
 
-  // Thumbnail fallback: if maxres fails (404), swap to hqdefault.
+  // Thumbnail fallback: if maxres fails (404), try the fallback once.
   for (const img of gridEl.querySelectorAll('img[data-thumb-fallback]')) {
     const fallback = img.getAttribute('data-thumb-fallback') || '';
     if (!fallback) continue;
+
+    // Avoid duplicate listeners when re-rendering
+    if (img.dataset.fallbackBound === '1') continue;
+    img.dataset.fallbackBound = '1';
+
     img.addEventListener('error', () => {
-      // Avoid loops
+      // If maxres fails, switch to hqdefault.
       if (img.dataset.thumbTried === '1') return;
       img.dataset.thumbTried = '1';
       img.src = fallback;
     }, { once: true });
   }
+
+
 
 
 
@@ -75,11 +82,13 @@ function openModalFromDataset(ds) {
   const title = ds.title || 'Video';
   const category = ds.category || '';
   const platform = ds.platform || '';
-  const duration = ds.duration || '';
+
   const youtubeURL = ds.youtube || '';
 
+
   modalTitle.textContent = title;
-  modalSub.textContent = [category, platform, duration].filter(Boolean).join(' • ');
+  modalSub.textContent = [category, platform].filter(Boolean).join(' • ');
+
 
   const embedUrl = getYouTubeEmbedUrl(youtubeURL);
   modalPlayer.innerHTML = embedUrl
